@@ -98,7 +98,6 @@ def main():
                     cheat = True
 
         if spacepressed == True:
-            spacepressed == False
             for draws in range(0, 10):              
                 slotmachine.Spin()
                 x1 = x
@@ -112,14 +111,10 @@ def main():
             pygame.draw.rect(screen, (255, 0, 0), (scoreX, scoreY, 400, 40))
             screen.blit(scoretext, (scoreX, scoreY))
             pygame.display.update()
+            spacepressed = False
 
 
-
-        #pygame.display.update()
-        
-    
-    
-    
+        #pygame.display.update() 
     pygame.quit()
     exit()
 
