@@ -27,7 +27,16 @@ class Spinner:
     # Calculate the Score Not the actuall calculation yes just something to see if it works
     def GetScore(self):
         if self.luck[0] == self.luck[1] == self.luck[2]:
-            points = 100
+            points = 75
+        elif self.luck[0] == self.luck[1]:
+            if self.luck[0] in [0, 1, 2]:
+                points = 40
+            else:
+                points = 10
+        elif self.luck[0] == self.luck[2]:
+            points = 10
+        else:
+            points = -10
         return points
 
 # -- Main Fun --
@@ -75,6 +84,7 @@ def main():
 
         if spacepressed == True:
             spacepressed == False
+            # If change the images make sure they are 128x128 or they will not center properly
             x = 509
             y = 232
             for draws in range(0, 10):              
