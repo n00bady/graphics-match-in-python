@@ -99,11 +99,6 @@ def main():
 
         if spacepressed == True:
             spacepressed == False
-            # If change the images make sure they are 128x128 or they will not center properly
-            x = 509
-            y = 232
-            scoreX = 1000
-            scoreY = 650
             for draws in range(0, 10):              
                 slotmachine.Spin()
                 x1 = x
