@@ -42,28 +42,44 @@ class Spinner:
 # -- Main Fun --
 
 def main():
+    # Pygame ininialization
     pygame.init()
     pygame.display.set_caption("Graphics Match v0.1")
     
+    # The slot machine images
     slot_images = ('lemon.png', 'bar.png', 'cherry.png', 'bell.png', 'blueberry.png', 'seven.png')
     slotmachine = Spinner(slot_images)
     
+    # Initial values
     quitprogram = False
     spacepressed = False
     cheat = False
+    score = 0
+    framerate = 60
+    spacepressed = True
+    # Coordinates for the score and the images
+    # If change the images make sure they are 128x128 or they will not center properly
+    x = 509
+    y = 232   
+    scoreX = 1000
+    scoreY = 650
 
+    # Window resolution and background color
     windowsize = (1280, 720)
     surfacecolor = (10, 80, 200)
     screen = pygame.display.set_mode(windowsize, DOUBLEBUF)
-    clock = pygame.time.Clock()
-    framerate = 60
-    textfont = pygame.font.SysFont("Cantarell", 22)
     screen.fill(surfacecolor)
     
-    # -- main loop --
+    # Clock
+    clock = pygame.time.Clock()
+
+    # Fonts for the text
+    textfont = pygame.font.SysFont("Cantarell", 22)
+
+    # -- Main loop --
     while not quitprogram:
-       # Pretty sure a static background don't need to run inside the main loop 
-       # screen.fill(surfacecolor)
+        # Pretty sure a static background don't need to run inside the main loop 
+        # screen.fill(surfacecolor)
         time = clock.tick(framerate)
         # Shows the current fps on the upperleft corner
         fpstext = textfont.render(str(round((1000/time), 1)), True, (255, 0, 0), (255, 255, 0)) # For some reason it run in 62.5fps
@@ -87,14 +103,25 @@ def main():
             # If change the images make sure they are 128x128 or they will not center properly
             x = 509
             y = 232
+            scoreX = 1000
+            scoreY = 650
             for draws in range(0, 10):              
-                result = slotmachine.Spin()
+                slotmachine.Spin()
                 x1 = x
-                for i in result:
+                for i in slotmachine.luck:
                     screen.blit(slotmachine.slot[i], (x1, y))
                     x1 = x1 + slotmachine.slot[i].get_width() + 3
+                # Calculate Score
+                score = score + slotmachine.GetScore()
+            # Show score
+            scoretext = textfont.render("Score: "+str(score), True, (255, 255, 255))
+            pygame.draw.rect(screen, (255, 0, 0), (scoreX, scoreY, 400, 40))
+            screen.blit(scoretext, (scoreX, scoreY))
+            pygame.display.update()
 
-        pygame.display.update()
+
+
+        #pygame.display.update()
         
     
     
