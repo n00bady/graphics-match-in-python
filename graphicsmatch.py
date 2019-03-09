@@ -16,14 +16,13 @@ class Spinner:
         for image in images:
             self.slot.append(pygame.image.load(image))
     # Spin the slots (note: Should rewrite in a way so that it doesn't need to call pygame.display.update() and all the screen 
-    # updates happen in the main)
+    # updates happen in the main) It is not as easy as it sounds :/
     def Spin(self):
         self.luck = (random.randint(0, 5), random.randint(0, 5), random.randint(0, 5))
 #         x1 = x
 #         for i in self.luck:
 #             surface.blit(self.slot[i], (x1, y))
 #             x1 = x1 + self.slot[i].get_width() + 3
-        return self.luck
     # Calculate the Score Not the actuall calculation yes just something to see if it works
     def GetScore(self):
         if self.luck[0] == self.luck[1] == self.luck[2]:
