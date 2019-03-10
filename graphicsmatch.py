@@ -18,7 +18,7 @@ class Spinner:
     # "Spin" randomly one time the slots
     def Spin(self):
         self.luck = (random.randint(0, 5), random.randint(0, 5), random.randint(0, 5))
-    # Calculate the Score
+    # Calculate the points
     def GetScore(self):
         if self.luck[0] == self.luck[1] == self.luck[2]:
             points = 75
@@ -57,6 +57,8 @@ def main():
     y = 232   
     scoreX = 1000
     scoreY = 650
+    pointsX = 920
+    pointsY = 310
 
     # Window resolution and background color
     windowsize = (1280, 720)
@@ -101,6 +103,16 @@ def main():
                     screen.blit(slotmachine.slot[i], (x1, y))
                     x1 = x1 + slotmachine.slot[i].get_width() + 3
                 pygame.display.update()
+            # Show how many points you got in the last spin
+            points = slotmachine.GetScore()
+            if points < 0:
+                pointstext = textfont.render("You lose: "+str(points), True, (230, 220, 55))
+                pygame.draw.rect(screen, (10, 80, 200), (pointsX, pointsY, 200, 40))
+                screen.blit(pointstext, (pointsX, pointsY))
+            else:
+                pointstext = textfont.render("You win: "+str(points), True, (230, 220, 55))
+                pygame.draw.rect(screen, (10, 80, 200), (pointsX, pointsY, 200, 40))
+                screen.blit(pointstext, (pointsX, pointsY))
             # Calculate Score
             score = score + slotmachine.GetScore()
             # Show score
