@@ -40,6 +40,7 @@ black_faded = [10, 80, 200, 2] # lowering the last number means the face out/in 
 def main():
     # Pygame ininialization
     pygame.init()
+    pygame.mixer.init()
     pygame.display.set_caption("Graphics Match v0.1")
     
     # The slot machine images
@@ -61,6 +62,7 @@ def main():
     scoreY = 650
     pointsX = 920
     pointsY = 310
+    gg = pygame.mixer.Sound('gg.ogg')
 
     # Window resolution and background color
     windowsize = (1280, 720)
@@ -127,6 +129,7 @@ def main():
                 pointstext = textfont.render("You win: "+str(points), True, (230, 220, 55))
                 pygame.draw.rect(screen, (10, 80, 200), (pointsX, pointsY, 200, 40))
                 screen.blit(pointstext, (pointsX, pointsY))
+                gg.play()
             # Calculate Score
             score = score + slotmachine.GetScore()
             # Show score
@@ -145,6 +148,7 @@ def main():
         screen.blit(newSurf, (pointsX, pointsY))
 
         pygame.display.flip() 
+    pygame.mixer.quit()
     pygame.quit()
     exit()
 
