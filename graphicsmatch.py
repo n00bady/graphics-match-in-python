@@ -78,7 +78,7 @@ def main():
     # -- Main loop --
     while not quitprogram:
         # Pretty sure a static background don't need to run inside the main loop 
-        # screen.fill(surfacecolor)
+        #screen.fill(surfacecolor)
         time = clock.tick(framerate)
         # Shows the current fps on the upperleft corner
         fpstext = textfont.render(str(round((1000/time), 1)), True, (255, 0, 0), (255, 255, 0)) # For some reason it run in 62.5fps
@@ -98,23 +98,32 @@ def main():
                     cheat = True
 
         if spacepressed == True:
-            for draws in range(0, 10):              
+            for draws in range(0, 150):              
                 slotmachine.Spin()
                 x1 = x
+                pygame.draw.rect(screen, (0, 0, 0), (x1, y, 393, 128))
                 for i in slotmachine.luck:
                     screen.blit(slotmachine.slot[i], (x1, y))
                     x1 = x1 + slotmachine.slot[i].get_width() + 3
-                # Calculate Score
-                score = score + slotmachine.GetScore()
+                pygame.display.update()
+            # Calculate Score
+            score = score + slotmachine.GetScore()
             # Show score
             scoretext = textfont.render("Score: "+str(score), True, (255, 255, 255))
             pygame.draw.rect(screen, (255, 0, 0), (scoreX, scoreY, 400, 40))
             screen.blit(scoretext, (scoreX, scoreY))
-            pygame.display.update()
+            #pygame.display.update()
             spacepressed = False
+        if cheat == True:
+            if score < 0:
+                score = -score
+                scoretext = textfont.render("Score: "+str(score), True, (255, 255, 255))
+                pygame.draw.rect(screen, (255, 0, 0), (scoreX, scoreY, 400, 40))
+                screen.blit(scoretext, (scoreX, scoreY))
+            cheat = False
 
 
-        #pygame.display.update() 
+        pygame.display.flip() 
     pygame.quit()
     exit()
 
