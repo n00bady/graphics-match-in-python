@@ -49,7 +49,7 @@ def main():
     spacepressed = False
     cheat = False
     score = 0
-    framerate = 60
+    framerate = 60 
     spacepressed = True
     # Coordinates for the score and the images
     # If you change the images make sure they are 128x128 or they will not center properly
@@ -72,13 +72,20 @@ def main():
     # Fonts for the text 
     #Maybe I should change this to Arial or something more stantard 
     textfont = pygame.font.SysFont("Cantarell", 22)
-
+    
     # -- Main loop --
     while not quitprogram:
-        time = clock.tick(framerate)
+        # - Old way to calculate fps -
+        #time = clock.tick(framerate)
         # Shows the current fps on the upperleft corner
-        fpstext = textfont.render(str(round((1000/time), 1)), True, (255, 0, 0), (255, 255, 0)) # For some reason it run in 62.5fps
-        screen.blit(fpstext, (0, 0))  
+        #fpstext = textfont.render(str(round((1000/time), 1)), True, (255, 0, 0), (255, 255, 0)) # For some reason it run in 62.5fps
+        # - New way to calculate fps - 
+        #clock.tick(framerate)
+        clock.tick_busy_loop(framerate)
+        fpstext = textfont.render(str(int(clock.get_fps())), True, (255, 0, 0), (255, 255, 0)) # For some reason it run in 62.5fps
+        pygame.draw.rect(screen, (255, 255, 0), (0, 0, 40, 30))
+        screen.blit(fpstext, (0, 0))
+        # There is something weird happening with the fps, don't know excaclty what... 🤔
 
         # Event handler ?
         for event in pygame.event.get():
@@ -117,14 +124,14 @@ def main():
             score = score + slotmachine.GetScore()
             # Show score
             scoretext = textfont.render("Score: "+str(score), True, (255, 255, 255))
-            pygame.draw.rect(screen, (255, 0, 0), (scoreX, scoreY, 400, 40))
+            pygame.draw.rect(screen, (255, 0, 0), (scoreX, scoreY, 400, 30))
             screen.blit(scoretext, (scoreX, scoreY))
             spacepressed = False
         if cheat == True:
             if score < 0:
                 score = -score
                 scoretext = textfont.render("Score: "+str(score), True, (255, 255, 255))
-                pygame.draw.rect(screen, (255, 0, 0), (scoreX, scoreY, 400, 40))
+                pygame.draw.rect(screen, (255, 0, 0), (scoreX, scoreY, 400, 30))
                 screen.blit(scoretext, (scoreX, scoreY))
             cheat = False
         pygame.display.flip() 
