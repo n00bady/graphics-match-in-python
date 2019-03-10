@@ -15,15 +15,10 @@ class Spinner:
         self.slot = []
         for image in images:
             self.slot.append(pygame.image.load(image))
-    # Spin the slots (note: Should rewrite in a way so that it doesn't need to call pygame.display.update() and all the screen 
-    # updates happen in the main) It is not as easy as it sounds :/
+    # "Spin" randomly one time the slots
     def Spin(self):
         self.luck = (random.randint(0, 5), random.randint(0, 5), random.randint(0, 5))
-#         x1 = x
-#         for i in self.luck:
-#             surface.blit(self.slot[i], (x1, y))
-#             x1 = x1 + self.slot[i].get_width() + 3
-    # Calculate the Score Not the actuall calculation yes just something to see if it works
+    # Calculate the Score
     def GetScore(self):
         if self.luck[0] == self.luck[1] == self.luck[2]:
             points = 75
@@ -57,7 +52,7 @@ def main():
     framerate = 60
     spacepressed = True
     # Coordinates for the score and the images
-    # If change the images make sure they are 128x128 or they will not center properly
+    # If you change the images make sure they are 128x128 or they will not center properly
     x = 509
     y = 232   
     scoreX = 1000
@@ -72,13 +67,12 @@ def main():
     # Clock
     clock = pygame.time.Clock()
 
-    # Fonts for the text
+    # Fonts for the text 
+    #Maybe I should change this to Arial or something more stantard 
     textfont = pygame.font.SysFont("Cantarell", 22)
 
     # -- Main loop --
     while not quitprogram:
-        # Pretty sure a static background don't need to run inside the main loop 
-        #screen.fill(surfacecolor)
         time = clock.tick(framerate)
         # Shows the current fps on the upperleft corner
         fpstext = textfont.render(str(round((1000/time), 1)), True, (255, 0, 0), (255, 255, 0)) # For some reason it run in 62.5fps
@@ -97,6 +91,7 @@ def main():
                 if keyboardinput == K_c:
                     cheat = True
 
+        # What happens when you push the buttons
         if spacepressed == True:
             for draws in range(0, 150):              
                 slotmachine.Spin()
@@ -112,7 +107,6 @@ def main():
             scoretext = textfont.render("Score: "+str(score), True, (255, 255, 255))
             pygame.draw.rect(screen, (255, 0, 0), (scoreX, scoreY, 400, 40))
             screen.blit(scoretext, (scoreX, scoreY))
-            #pygame.display.update()
             spacepressed = False
         if cheat == True:
             if score < 0:
@@ -121,12 +115,9 @@ def main():
                 pygame.draw.rect(screen, (255, 0, 0), (scoreX, scoreY, 400, 40))
                 screen.blit(scoretext, (scoreX, scoreY))
             cheat = False
-
-
         pygame.display.flip() 
     pygame.quit()
     exit()
-
 
 if __name__ == "__main__":
     main()
