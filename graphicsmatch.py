@@ -35,6 +35,8 @@ class Spinner:
 
 # -- Main Fun --
 
+black_faded = [10, 80, 200, 2] # lowering the last number means the face out/in is slower
+
 def main():
     # Pygame ininialization
     pygame.init()
@@ -66,13 +68,18 @@ def main():
     screen = pygame.display.set_mode(windowsize, DOUBLEBUF)
     screen.fill(surfacecolor)
     
+
     # Clock
     clock = pygame.time.Clock()
 
     # Fonts for the text 
     #Maybe I should change this to Arial or something more stantard 
     textfont = pygame.font.SysFont("Cantarell", 22)
-    
+   
+    # Create a new surface to help me fade out the points text in the main loop
+    newSurf = pygame.Surface((200, 40)).convert_alpha()
+    newSurf.fill(black_faded)
+
     # -- Main loop --
     while not quitprogram:
         # - Old way to calculate fps -
@@ -134,6 +141,9 @@ def main():
                 pygame.draw.rect(screen, (255, 0, 0), (scoreX, scoreY, 400, 30))
                 screen.blit(scoretext, (scoreX, scoreY))
             cheat = False
+        # Fadeing out the points text by putting a new surface on top of it and fading it in slowly
+        screen.blit(newSurf, (pointsX, pointsY))
+
         pygame.display.flip() 
     pygame.quit()
     exit()
