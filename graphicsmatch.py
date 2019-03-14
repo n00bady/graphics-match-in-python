@@ -33,9 +33,25 @@ class Spinner:
             points = -10
         return points
 
+# Cheer for getting a jackpot  7 7 7
+def jackpot(surface, font, surfacecolor):
+    x0 = random.randint(100, 1000)
+    y0 = random.randint(50, 550)
+    x1 = random.randint(100, 1000)
+    y1 = random.randint(50, 550)
+    x2 = random.randint(100, 1000)
+    y2 = random.randint(50, 550)
+    wintext0 = font.render("J A C K P O T ! ! !", True, (210, 0, 0))
+    wintext1 = font.render("J A C K P O T ! ! !", True, (0, 210, 0))
+    wintext2 = font.render("J A C K P O T ! ! !", True, (0, 0, 250))
+    surface.blit(wintext0, (x0, y0))
+    surface.blit(wintext1, (x1, y1))
+    surface.blit(wintext2, (x2, y2))
+    
+
 # -- Main Fun --
 
-black_faded = [10, 80, 200, 2] # lowering the last number means the face out/in is slower
+surface_color_fade = [10, 80, 200, 2] # lowering the last number means the face out/in is slower
 
 def main():
     # Pygame ininialization
@@ -77,10 +93,11 @@ def main():
     # Fonts for the text 
     #Maybe I should change this to Arial or something more stantard 
     textfont = pygame.font.SysFont("Arial", 22)
+    textfont2 = pygame.font.SysFont("Arial", 42, True)
    
     # Create a new surface to help me fade out the points text in the main loop
     newSurf = pygame.Surface((200, 40)).convert_alpha()
-    newSurf.fill(black_faded)
+    newSurf.fill(surface_color_fade)
 
     # -- Main loop --
     while not quitprogram:
@@ -95,7 +112,7 @@ def main():
         pygame.draw.rect(screen, (255, 255, 0), (0, 0, 40, 30))
         screen.blit(fpstext, (0, 0))
         # There is something weird happening with the fps, don't know excaclty what... 🤔
-
+        
         # Event handler ?
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -111,6 +128,7 @@ def main():
 
         # What happens when you push the buttons
         if spacepressed == True:
+            screen.fill(surfacecolor)
             for draws in range(0, 150):              
                 slotmachine.Spin()
                 x1 = x
@@ -125,6 +143,10 @@ def main():
                 pointstext = textfont.render("You lose: "+str(points), True, (230, 220, 55))
                 pygame.draw.rect(screen, (10, 80, 200), (pointsX, pointsY, 200, 40))
                 screen.blit(pointstext, (pointsX, pointsY))
+            elif points == 75:
+                # Something different happens when you get a jackpot!
+                jackpot(screen, textfont2, surfacecolor)
+                gg.play()
             else:
                 pointstext = textfont.render("You win: "+str(points), True, (230, 220, 55))
                 pygame.draw.rect(screen, (10, 80, 200), (pointsX, pointsY, 200, 40))
