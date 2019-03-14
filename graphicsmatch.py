@@ -76,7 +76,7 @@ def main():
 
     # Fonts for the text 
     #Maybe I should change this to Arial or something more stantard 
-    textfont = pygame.font.SysFont("Cantarell", 22)
+    textfont = pygame.font.SysFont("Arial", 22)
    
     # Create a new surface to help me fade out the points text in the main loop
     newSurf = pygame.Surface((200, 40)).convert_alpha()
