@@ -93,10 +93,19 @@ def main():
     #Maybe I should change this to Arial or something more stantard 
     textfont = pygame.font.SysFont("Arial", 22)
     textfont2 = pygame.font.SysFont("Arial", 42, True)
+    textfont3 = pygame.font.SysFont("Arial", 48, True, True)
    
     # Create a new surface to help me fade out the points text in the main loop
     newSurf = pygame.Surface((200, 40)).convert_alpha()
     newSurf.fill(surface_color_fade)
+
+    # Start game text
+    titletext = textfont3.render("GraphicsMatch!", True, (210, 0, 0), (10, 80, 128))
+    startText = textfont2.render("TO START PLAYING PRESS SPACE !", True, (0, 0, 0), (128, 128, 128))
+    quitText = textfont2.render("TO QUIT PRESS Q", True, (0, 0, 0), (128, 128, 128))
+    screen.blit(titletext, (429, 100, 423, 57))
+    screen.blit(startText, (150, 250))
+    screen.blit(quitText, (150, 350))
 
     # -- Main loop --
     while not quitprogram:
