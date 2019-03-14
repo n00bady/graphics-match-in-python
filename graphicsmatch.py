@@ -69,7 +69,6 @@ def main():
     cheat = False
     score = 0
     framerate = 60 
-    spacepressed = True
     # Coordinates for the score and the images
     # If you change the images make sure they are 128x128 or they will not center properly
     x = 509
@@ -109,8 +108,8 @@ def main():
         #clock.tick(framerate)
         clock.tick_busy_loop(framerate)
         fpstext = textfont.render(str(int(clock.get_fps())), True, (255, 0, 0), (255, 255, 0)) # For some reason it run in 62.5fps
-        pygame.draw.rect(screen, (255, 255, 0), (0, 0, 40, 30))
-        screen.blit(fpstext, (0, 0))
+        #pygame.draw.rect(screen, (255, 255, 0), (0, 0, 40, 30))
+        #screen.blit(fpstext, (0, 0))
         # There is something weird happening with the fps, don't know excaclty what... 🤔
         
         # Event handler ?
@@ -128,7 +127,9 @@ def main():
 
         # What happens when you push the buttons
         if spacepressed == True:
-            screen.fill(surfacecolor)
+            screen.fill(surfacecolor) # Refresh the background from the previous
+            pygame.draw.rect(screen, (255, 255, 0), (0, 0, 40, 30))
+            screen.blit(fpstext, (0, 0))
             for draws in range(0, 150):              
                 slotmachine.Spin()
                 x1 = x
